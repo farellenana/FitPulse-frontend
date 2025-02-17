@@ -1,0 +1,196 @@
+<div class="dashboard dashboard_1">
+  <div class="full_container">
+    <div class="inner_container">
+      <app-sidebar></app-sidebar>
+      <!-- end sidebar -->
+      <!-- right content -->
+      <div id="content">
+        <!-- topbar -->
+        <app-dash-nav></app-dash-nav>
+        <div class="midde_cont">
+          <div class="container-fluid">
+            <div class="row column_title">
+              <div class="col-md-12">
+                <div class="page_title">
+                  <h2>Seance d'entrainement</h2>
+                </div>
+              </div>
+            </div>
+            <p-toolbar class="custom-toolbar">
+              <div class="overlay">
+                <h1 class="title">Listing des Seances</h1>
+                <button type="button" class="btn btn-lg text-white fw-bold"
+                  style="width:8rem; height:2.5rem;  background-color: #214162 !important;" (click)="create()">
+                  <i class="pi pi-plus"></i> Ajouter
+                </button>
+              </div>
+            </p-toolbar>
+            <div *ngIf="seances.length == 0" class="empty-category-message">
+              <img src="assets/images/layout/seance.png" alt="Aucune catégorie trouvée" class="empty-category-image" />
+              <p>Aucun seance d'entrainement trouvée</p>
+            </div>
+            <p-table #dt *ngIf="seances.length > 0" [value]="seances" [paginator]="true" [rows]="6"
+              styleClass="p-datatable-sm" [rowHover]="true" [scrollable]="true" [loading]="displaySpinner"
+              [selection]="selectedSeance" (selectionChange)="selectedSeance = $event" dataKey="seanceID"
+              responsiveLayout="scroll" scrollHeight="400px">
+
+              <!-- HEADER -->
+              <ng-template pTemplate="header">
+                <tr>
+                  <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox>&nbsp;&nbsp; N°</th>
+                  <!-- <th pSortableColumn="seanceID">ID <p-sortIcon field="seanceID"></p-sortIcon></th> -->
+                  <th pSortableColumn="user">Utilisateur <p-sortIcon field="user"></p-sortIcon></th>
+                  <th pSortableColumn="planEntrainement">Plan d'Entraînement <p-sortIcon
+                      field="planEntrainement"></p-sortIcon></th>
+                  <th pSortableColumn="dateSeance">Date <p-sortIcon field="dateSeance"></p-sortIcon></th>
+                  <th pSortableColumn="typeSeance">Type de Séance <p-sortIcon field="typeSeance"></p-sortIcon></th>
+                  <th pSortableColumn="duree">Durée (min) <p-sortIcon field="duree"></p-sortIcon></th>
+                  <th pSortableColumn="caloriesBrulees">Calories Brûlées <p-sortIcon
+                      field="caloriesBrulees"></p-sortIcon></th>
+                  <th>Commentaires</th>
+                  <th>Actions</th>
+                </tr>
+              </ng-template>
+
+              <!-- BODY -->
+              <ng-template pTemplate="body" let-seance let-i="rowIndex">
+                <tr [pSelectableRow]="seance">
+                  <td class="text-primary">
+                    <p-tableCheckbox [value]="seance"></p-tableCheckbox>&nbsp;&nbsp;{{ i + 1 }}
+                  </td>
+                  <!-- <td>{{ seance.seanceID }}</td> -->
+                  <td>{{ getUserName(seance.user) }}</td>
+                  <td>{{ getPlanName(seance.planID) }}</td>
+                  <td>{{ seance.dateSeance | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ seance.typeSeance }}</td>
+                  <td>{{ seance.duree }}</td>
+                  <td>{{ seance.caloriesBrulees }}</td>
+                  <td>{{ seance.commentaires }}</td>
+                  <td>
+                    <button type="button" class="btn fs-3 actionIcon" (click)="get(seance, 'edit')">
+                      <i class="pi pi-pencil text-success fw-bold"></i>
+                    </button>
+                    <button type="button" class="btn fs-3 actionIcon" (click)="delete(seance)">
+                      <i class="pi pi-trash text-danger fw-bold"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<p-dialog [(visible)]="DialogVisible" [modal]="true" [style]="{ width: '70vh' }" [draggable]="true" [resizable]="true"
+  class="modal-dialog-centered">
+
+  <!-- HEADER DU DIALOG -->
+  <ng-template pTemplate="header">
+    <div class="d-flex align-items-center">
+      <i class="fa fa-clock fs-4 me-2 text-primary"></i>
+      <span class="fw-bold fs-5">{{ action === 'edit' ? 'Modifier' : 'Ajouter' }} une Séance d'Entraînement</span>
+    </div>
+  </ng-template>
+
+  <!-- CONTENU DU FORMULAIRE -->
+  <div class="p-fluid px-3 py-4">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="user" class="form-label fw-semibold">Utilisateur <span class="text-danger">*</span></label>
+        <p-dropdown [(ngModel)]="seance.userID" [options]="users" optionLabel="email" optionValue="id"
+          placeholder="Sélectionnez un utilisateur" name="user"></p-dropdown>
+        <div class="invalid-feedback">
+          Veuillez sélectionner un utilisateur.
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="planEntrainement" class="form-label fw-semibold">Plan d'Entraînement <span
+            class="text-danger">*</span></label>
+        <p-dropdown [(ngModel)]="seance.planID" [options]="plans" optionLabel="nomPlan" optionValue="planID"
+          placeholder="Sélectionnez un plan" name="planEntrainement"></p-dropdown>
+        <div class="invalid-feedback">
+          Veuillez sélectionner un plan d'entraînement.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="dateSeance" class="form-label fw-semibold">Date de la Séance <span
+            class="text-danger">*</span></label>
+        <input type="date" id="dateSeance" class="form-control" [(ngModel)]="seance.dateSeance" required>
+        <div class="invalid-feedback">
+          Veuillez sélectionner une date de séance.
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="typeSeance" class="form-label fw-semibold">Type de Séance <span class="text-danger">*</span></label>
+        <input type="text" id="typeSeance" class="form-control" [(ngModel)]="seance.typeSeance" required>
+        <div class="invalid-feedback">
+          Veuillez entrer un type de séance.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="duree" class="form-label fw-semibold">Durée (en minutes) <span class="text-danger">*</span></label>
+        <input type="number" id="duree" class="form-control" [(ngModel)]="seance.duree" min="1" required>
+        <div class="invalid-feedback">
+          Veuillez entrer une durée valide.
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="caloriesBrulees" class="form-label fw-semibold">Calories Brûlées</label>
+        <input type="number" id="caloriesBrulees" class="form-control" [(ngModel)]="seance.caloriesBrulees" min="0">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <label for="commentaires" class="form-label fw-semibold">Commentaires</label>
+        <textarea id="commentaires" class="form-control" [(ngModel)]="seance.commentaires"
+          placeholder="Entrez des commentaires supplémentaires"></textarea>
+      </div>
+    </div>
+
+    <!-- <div class="row">
+      <div class="col-md-12 mb-3">
+        <label for="exercices" class="form-label fw-semibold">Exercices Associés <span
+            class="text-danger">*</span></label>
+        <p-multiSelect [(ngModel)]="seance.exercices" [options]="exercices" optionLabel="nomExercice"
+          optionValue="exerciceID" placeholder="Sélectionnez des exercices" [filter]="true" [showToggleAll]="false"
+          required></p-multiSelect>
+        <div class="invalid-feedback">
+          Veuillez sélectionner au moins un exercice.
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <!-- FOOTER AVEC LES BOUTONS -->
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center gap-2 py-2">
+      <button class="btn btn-outline-danger" (click)="DialogVisible = false">
+        <i class="fa fa-times"></i>&nbsp; Annuler
+      </button>
+      <button *ngIf="action !== 'view'" type="button" class="btn btn-success"
+        [disabled]="!seance.userID || !seance.planID || !seance.dateSeance || !seance.typeSeance || !seance.duree"
+        (click)="save()">
+        <i class="fa fa-check"></i>&nbsp; Enregistrer
+      </button>
+    </div>
+  </ng-template>
+
+</p-dialog>
+`

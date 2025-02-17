@@ -1,0 +1,116 @@
+/* Import de la police */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Appliquer la police globale */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar transparente, fixée en haut et sans espace */
+.navbar {
+  background: transparent !important;
+  padding: 10px 0; /* Réduit l'espace autour */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* S'assure que la navbar est toujours visible */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 50px; /* Ajoute un peu de padding pour éviter que le logo soit trop collé */
+  padding-right: 50px; /* Garde les icônes bien placées */
+}
+
+/* Déplacer le logo plus à gauche et ajouter plus d'espace */
+.navbar-brand {
+  margin-left: -120px; /* Décale plus à gauche */
+  margin-right: 200px; /* Augmente la distance avec les autres éléments */
+}
+
+.navbar-brand img {
+  height: 120px; /* Taille augmentée */
+}
+
+/* Centrer et espacer les liens de la navbar */
+.navbar-nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center; /* Centre les liens */
+}
+
+.navbar-nav .nav-link {
+  color: white;
+  font-size: 18px;
+  font-weight: bold; /* Texte en gras */
+  margin: 0 30px; /* Espacement augmenté */
+  transition: all 0.3s ease-in-out;
+  position: relative;
+}
+
+/* Lien actif et au survol */
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:hover {
+  color: #f36100;
+}
+
+.navbar-nav .nav-link.active::after,
+.navbar-nav .nav-link:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 2px;
+  background: #f36100;
+}
+
+/* Contact en orange */
+.contact-link {
+  font-weight: bold;
+  color: #f36100 !important;
+}
+
+/* Icônes sociales complètement à droite */
+.social-icons {
+  display: flex;
+  align-items: center;
+  margin-right: -50px; /* Ajuste la distance */
+}
+
+.social-icons a {
+  color: white;
+  font-size: 20px;
+  margin-left: 20px;
+  transition: color 0.3s ease-in-out;
+}
+
+.social-icons a:hover {
+  color: #f36100;
+}
+
+/* Ajustements pour mobile */
+@media (max-width: 991px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .social-icons {
+    justify-content: center;
+    margin-top: 10px;
+    margin-right: 0;
+  }
+
+  .navbar-brand {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

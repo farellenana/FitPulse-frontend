@@ -1,0 +1,24 @@
+
+
+
+/* .custom-toolbar {
+
+  background: url('/assets/images/layout/bg.jpg') no-repeat center center/cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 5px;
+} */
+
+
+
+.empty-category-message {
+  text-align: center; /* Centre le texte et l'image */
+  margin: 20px; /* Ajoute un peu d'espace autour */
+}
+
+.empty-category-image {
+  max-width: 50%; /* Rend l'image responsive */
+  height: auto; /* Maintient le ratio de l'image */
+  margin-bottom: 10px; /* Espace entre l'image et le texte */
+}

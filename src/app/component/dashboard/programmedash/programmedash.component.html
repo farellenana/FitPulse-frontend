@@ -1,0 +1,181 @@
+<div class="dashboard dashboard_1">
+  <div class="full_container">
+    <div class="inner_container">
+      <app-sidebar></app-sidebar>
+      <!-- end sidebar -->
+      <!-- right content -->
+      <div id="content">
+        <!-- topbar -->
+        <app-dash-nav></app-dash-nav>
+        <div class="midde_cont">
+          <div class="container-fluid">
+            <div class="row column_title">
+              <div class="col-md-12">
+                <div class="page_title">
+                  <h2> Programme</h2>
+                </div>
+              </div>
+            </div>
+            <p-toolbar class="custom-toolbar">
+              <div class="overlay">
+                <h1 class="title">Liste des Programme</h1>
+                <button type="button" class="btn btn-lg text-white fw-bold"
+                  style="width:8rem; height:2.5rem;  background-color: #214162 !important;" (click)="create()">
+                  <i class="pi pi-plus"></i> Ajouter
+                </button>
+              </div>
+            </p-toolbar>
+            <div *ngIf="programmes.length == 0" class="empty-category-message">
+              <img src="assets/images/layout/programme.png" alt="Aucune catégorie trouvée"
+                class="empty-category-image" />
+              <p>Aucun programme trouvée</p>
+            </div>
+            <p-table #dt *ngIf="programmes.length!=0" [value]="programmes" [paginator]="true" [rows]="6"
+              styleClass="p-datatable-sm" [rowHover]="true" [scrollable]="true" [loading]="displaySpinner"
+              [selection]="selectedProgramme" (selectionChange)="selectedProgramme = $event" dataKey="programmeID"
+              responsiveLayout="scroll" scrollHeight="400px">
+
+              <!-- HEADER -->
+              <ng-template pTemplate="header">
+                <tr>
+                  <th><p-tableHeaderCheckbox></p-tableHeaderCheckbox>&nbsp;&nbsp; N°</th>
+                  <th pSortableColumn="nomProgramme">Nom du Programme <p-sortIcon field="nomProgramme"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="user">Utilisateur <p-sortIcon field="user"></p-sortIcon></th>
+                  <th pSortableColumn="typeObjectif">Objectif <p-sortIcon field="typeObjectif"></p-sortIcon></th>
+                  <th pSortableColumn="dateDebut">Date Début <p-sortIcon field="dateDebut"></p-sortIcon></th>
+                  <th pSortableColumn="dateFin">Date Fin <p-sortIcon field="dateFin"></p-sortIcon></th>
+                  <th>Description</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </ng-template>
+
+              <!-- BODY -->
+              <ng-template pTemplate="body" let-programme let-i="rowIndex">
+                <tr [pSelectableRow]="programme">
+                  <td class="text-primary">
+                    <p-tableCheckbox [value]="programme"></p-tableCheckbox>&nbsp;&nbsp;{{ i + 1 }}
+                  </td>
+                  <td>{{ programme.nomProgramme }}</td>
+                  <td>{{ getUserName(programme.user) }}</td>
+                  <td>{{ programme.typeObjectif }}</td>
+                  <td>{{ programme.dateDebut | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ programme.dateFin | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ programme.description }}</td>
+                  <td>
+                    <span [class.text-success]="programme.estActif" [class.text-danger]="!programme.estActif">
+                      {{ programme.estActif ? 'Actif' : 'Inactif' }}
+                    </span>
+                  </td>
+                  <td>
+                    <button type="button" class="btn fs-3 actionIcon" (click)="get(programme, 'edit')">
+                      <i class="pi pi-pencil text-success fw-bold"></i>
+                    </button>
+                    <button type="button" class="btn fs-3 actionIcon" (click)="delete(programme)">
+                      <i class="pi pi-trash text-danger fw-bold"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog [(visible)]="DialogVisible" [modal]="true" [style]="{ width: '70vh' }" [draggable]="true" [resizable]="true"
+  class="modal-dialog-centered">
+
+  <!-- HEADER DU DIALOG -->
+  <ng-template pTemplate="header">
+    <div class="d-flex align-items-center">
+      <i class="fa fa-list-alt fs-4 me-2 text-primary"></i>
+      <span class="fw-bold fs-5">{{ action === 'edit' ? 'Modifier' : 'Ajouter' }} un Programme</span>
+    </div>
+  </ng-template>
+
+  <!-- CONTENU DU FORMULAIRE -->
+  <div class="p-fluid px-3 py-4">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="user" class="form-label fw-semibold">Utilisateur <span class="text-danger">*</span></label>
+        <p-dropdown [(ngModel)]="programme.user" [options]="users" optionLabel="email" optionValue="id"
+          placeholder="Sélectionnez un utilisateur" name="user"></p-dropdown>
+        <div class="invalid-feedback">
+          Veuillez sélectionner un utilisateur.
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="objectif" class="form-label fw-semibold">Objectif <span class="text-danger">*</span></label>
+        <p-dropdown [(ngModel)]="programme.objectifID" [options]="objectifs" optionLabel="nomObjectif"
+          optionValue="objectifID" placeholder="Sélectionnez un objectif" name="objectif"></p-dropdown>
+        <div class="invalid-feedback">
+          Veuillez sélectionner un objectif.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="nomProgramme" class="form-label fw-semibold">Nom du Programme <span
+            class="text-danger">*</span></label>
+        <input type="text" id="nomProgramme" class="form-control" [(ngModel)]="programme.nomProgramme" required>
+        <div class="invalid-feedback">
+          Veuillez entrer un nom de programme.
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="dateDebut" class="form-label fw-semibold">Date de Début <span class="text-danger">*</span></label>
+        <input type="date" id="dateDebut" class="form-control" [(ngModel)]="programme.dateDebut" required>
+        <div class="invalid-feedback">
+          Veuillez sélectionner une date de début.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="dateFin" class="form-label fw-semibold">Date de Fin <span class="text-danger">*</span></label>
+        <input type="date" id="dateFin" class="form-control" [(ngModel)]="programme.dateFin" required>
+        <div class="invalid-feedback">
+          Veuillez sélectionner une date de fin.
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="estActif" class="form-label fw-semibold">Statut</label>
+        <p-checkbox [(ngModel)]="programme.estActif" binary="true"></p-checkbox>
+        <span class="ms-2">Programme actif</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <label for="description" class="form-label fw-semibold">Description</label>
+        <textarea id="description" class="form-control" [(ngModel)]="programme.description"
+          placeholder="Entrez une description du programme"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER AVEC LES BOUTONS -->
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center gap-2 py-2">
+      <button class="btn btn-outline-danger" (click)="DialogVisible = false">
+        <i class="fa fa-times"></i>&nbsp; Annuler
+      </button>
+      <button *ngIf="action !== 'view'" type="button" class="btn btn-success"
+        [disabled]="!programme.user || !programme.objectifID || !programme.nomProgramme || !programme.dateDebut || !programme.dateFin"
+        (click)="save()">
+        <i class="fa fa-check"></i>&nbsp; Enregistrer
+      </button>
+    </div>
+  </ng-template>
+
+</p-dialog>

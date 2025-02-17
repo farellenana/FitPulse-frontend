@@ -1,0 +1,195 @@
+/* 🌄 Assure que les images du carrousel remplissent bien la zone */
+.carousel-item {
+  position: relative;
+  height: 100vh;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  z-index: 3; /* Plus grand que le trapèze */
+}
+
+.carousel-item img {
+  height: 100vh;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* 🎭 Trapèze semi-transparent fixé à droite */
+.trapeze {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 70%; /* Occupe la moitié droite */
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparence */
+  clip-path: polygon(100% 0%, 60% 0%, 40% 100%, 100% 100%);
+  z-index: 1; /* S’assure qu’il est derrière le texte */
+}
+
+/* 📌 Positionne le texte correctement */
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translateY(-50%);
+  z-index: 2; /* Au-dessus de tout */
+  text-align: left;
+  width: 60%; /* Pour qu’il ne déborde pas */
+}
+
+/* 📝 Stylisation du texte */
+.hi-text {
+  color: white;
+}
+
+.hi-text span {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.hi-text h1 {
+  font-size: 56px;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1.2;
+  margin-top: 10px;
+}
+
+.hi-text h1 strong {
+  color: #f36100;
+}
+
+.primary-btn {
+  display: inline-block;
+  background-color: #f36100; /* Couleur de fond */
+  color: white; /* Texte blanc */
+  padding: 12px 24px; /* Espacement interne */
+  font-size: 18px; /* Taille du texte */
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px; /* Coins arrondis */
+  text-decoration: none; /* Supprime le soulignement */
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+
+/* 📌 Effet au survol */
+.primary-btn:hover {
+  background-color: #f36100; /* Couleur plus foncée au survol */
+  transform: scale(1.05); /* Légère augmentation */
+}
+
+/* 📱 Responsive pour mobile */
+@media (max-width: 991px) {
+  .trapeze {
+    width: 100%;
+    height: 40%;
+    bottom: 0;
+    top: auto;
+    clip-path: none; /* Forme standard sur mobile */
+  }
+
+  .carousel-caption {
+    width: 80%;
+    left: 10%;
+  }
+
+  .hi-text h1 {
+    font-size: 36px;
+  }
+}
+
+
+.particularity {
+  height: 50vh; /* Hauteur à la moitié de l'écran */
+  background-color: black; /* Fond noir */
+  color: white; /* Texte blanc */
+  display: flex;
+  flex-direction: column; /* Organiser les éléments en colonne */
+  justify-content: center; /* Centrer verticalement */
+  align-items: center; /* Centrer horizontalement */
+  text-align: center; /* Centrer le texte dans toute la section */
+}
+
+/* Titre de la section avec le sous-titre */
+.particularity .section-title {
+  display: flex;
+  flex-direction: column; /* Organiser les éléments en colonne */
+  align-items: center; /* Centrer horizontalement */
+  justify-content: center; /* Centrer verticalement si nécessaire */
+}
+
+.particularity .section-title span {
+  color: #f36100; /* Couleur différente pour le sous-titre */
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.particularity .section-title h2 {
+  font-size: 36px; /* Ajuster la taille du titre principal */
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Contenu des items dans particularity */
+.cs-item {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1); /* Légère transparence */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrer les éléments à l'intérieur de chaque item */
+  justify-content: center; /* Centrer les éléments à l'intérieur de chaque item */
+  width: 100%; /* S'assure que l'élément prenne toute la largeur de son conteneur */
+  margin-bottom: 20px; /* Ajouter un espacement entre les items */
+}
+
+/* Centrer le texte et l'icône dans cs-item */
+.cs-item h4 {
+  margin-top: 10px;
+  font-size: 1.5rem;
+}
+
+.cs-item p {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* Style pour les icônes circulaires */
+.cs-item span {
+  display: flex;
+  justify-content: center; /* Centrer horizontalement */
+  align-items: center; /* Centrer verticalement */
+  width: 70px; /* Taille du cercle */
+  height: 70px;
+  border-radius: 50%; /* Forme circulaire */
+  background-color: rgba(255, 165, 0, 0.2); /* Fond légèrement orange */
+  color: #f36100; /* Couleur de l'icône */
+  font-size: 24px; /* Taille de l'icône */
+  transition: all 0.3s ease-in-out; /* Animation fluide */
+  text-align: center; /* Centrer le texte à l'intérieur de l'icône */
+  margin-bottom: 10px; /* Un peu d'espace en dessous de l'icône */
+}
+
+/* Effet hover sur l'icône */
+.cs-item span:hover {
+  background-color: #f36100; /* Fond orange au hover */
+  color: white; /* Icône blanche au hover */
+}
+
+/* Pour que les icônes soient bien centrées dans les colonnes */
+.row {
+  display: flex;
+  justify-content: space-between; /* Assure un espacement égal entre les colonnes */
+  flex-wrap: wrap; /* Permet au contenu de se réorganiser si l'espace est réduit */
+}
+
+.col-lg-3,
+.col-sm-6 {
+  display: flex;
+  justify-content: center; /* Centrer horizontalement */
+  align-items: center; /* Centrer verticalement */
+}

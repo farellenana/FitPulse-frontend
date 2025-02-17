@@ -1,0 +1,42 @@
+<div class="full_container">
+  <div class="container">
+    <div class="center verticle_center full_height">
+      <div class="login_section">
+        <div class="logo_login">
+          <div class="center">
+            <img width="210" src="/assets/images/logowhite.png" alt="#" />
+          </div>
+        </div>
+        <div class="login_form">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <fieldset>
+              <div class="field">
+                <label class="label_field">Email Address</label>
+                <input type="email" formControlName="username" placeholder="E-mail" />
+              </div>
+
+              <div class="field">
+                <label class="label_field">Password</label>
+                <input type="password" formControlName="password" placeholder="Password" />
+              </div>
+
+              <div class="field">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input"> Remember Me
+                </label>
+                <a class="forgot" href="">Forgotten Password?</a>
+              </div>
+
+              <div class="field margin_0">
+                <button type="submit" [disabled]="loginForm.invalid" class="main_bt">
+                  Sign In
+                </button>
+              </div>
+            </fieldset>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
