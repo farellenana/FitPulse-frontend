@@ -1,0 +1,70 @@
+.full_container{
+  background: url('/assets/images/background.avif') no-repeat center center/cover;
+}
+
+.login_form{
+  padding-top: 10px !important;
+}
+
+.login_form form .field {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 15px;
+}
+
+.login_form form .field label.label_field {
+  margin: 0 0 0 0 !important;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+}
+
+.login_form form .field input,
+.login_form form .field select {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  transition: box-shadow 0.3s ease;
+}
+
+.login_form form .field input:hover,
+.login_form form .field input:focus,
+.login_form form .field select:hover,
+.login_form form .field select:focus {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.login_form .field .form-check-label {
+  margin-left: 4.5px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.full_container {
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.login_section {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  /* padding: 30px; */
+  background-color: #fff;
+}
+
+.row.g-3 .col-md-6 {
+  padding: 4px;
+}
+
+.btn.btn-primary {
+  padding: 10px 30px;
+  font-size: 16px;
+}

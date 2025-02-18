@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './component/client/home-page/home-page.component';
-import { LoginComponent } from './component/login/login/login.component';
+import { LoginComponent } from './component/auth/login/login.component';
 import { NavbarComponent } from './component/layout/navbar/navbar.component';
 import { AboutComponent } from './component/client/about/about.component';
 import { ProgrammeComponent } from './component/client/programme/programme.component';
@@ -15,6 +15,9 @@ import { CategoryComponent } from './component/dashboard/category/category.compo
 import { SeanceComponent } from './component/dashboard/seance/seance.component';
 import { CategorydashComponent } from './component/dashboard/categorydash/categorydash.component';
 import { ObjectifComponent } from './component/dashboard/objectif/objectif.component';
+import { RoleGuard } from './component/auth/role.guard';
+import { AuthGuard } from './component/auth/auth.guard';
+import { SignUpComponent } from './component/auth/sign-up/sign-up.component';
 
 export const routes: Routes = [
   {
@@ -27,12 +30,18 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'sidebar',
-    component: SidebarComponent,
+    path: 'register',
+    component: SignUpComponent,
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
   },
   {
     path: 'homePage',
     component: HomePageComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'about',
@@ -45,11 +54,6 @@ export const routes: Routes = [
   {
     path: 'service',
     component: ServiceComponent,
-  },
-
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
   },
   {
     path: 'exo',
@@ -87,5 +91,9 @@ export const routes: Routes = [
   {
     path: 'dashNav',
     component: DashNavComponent,
+  },
+  {
+    path: 'sidebar',
+    component: SidebarComponent,
   },
 ];

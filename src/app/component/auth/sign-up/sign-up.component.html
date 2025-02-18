@@ -1,0 +1,178 @@
+<!-- <div class="full_container">
+  <div class="container">
+    <div class="center verticle_center full_height">
+      <div class="login_section">
+        <div class="logo_login">
+          <div class="center">
+            <img width="210" src="/assets/images/logowhite.png" alt="#" />
+          </div>
+        </div>
+        <div class="login_form">
+          <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+            <fieldset>
+              <legend>Inscription</legend>
+
+              <div class="field">
+                <label class="label_field">Prénom</label>
+                <input type="text" formControlName="firstName" placeholder="Prénom" required />
+              </div>
+
+              <div class="field">
+                <label class="label_field">Nom</label>
+                <input type="text" formControlName="lastName" placeholder="Nom" required />
+              </div>
+
+              <div class="field">
+                <label class="label_field">Adresse E-mail</label>
+                <input type="email" formControlName="email" placeholder="E-mail" required />
+              </div>
+
+              <div class="field">
+                <label class="label_field">Mot de passe</label>
+                <input type="password" formControlName="password" placeholder="Mot de passe" required />
+              </div>
+
+              <div class="field">
+                <label class="label_field">Confirmer le mot de passe</label>
+                <input type="password" formControlName="confirmPassword" placeholder="Confirmer le mot de passe"
+                  required />
+              </div>
+
+              <div class="field">
+                <label class="label_field">Date de naissance</label>
+                <input type="date" formControlName="birthDate" required />
+              </div>
+
+              <div class="field">
+                <label class="label_field">Genre</label>
+                <select formControlName="gender" required>
+                  <option value="" disabled selected>Choisir le genre</option>
+                  <option value="M">Masculin</option>
+                  <option value="F">Féminin</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label class="label_field">Taille (cm)</label>
+                <input type="number" formControlName="height" placeholder="Taille" required />
+              </div>
+
+              <div class="field">
+                <label class="label_field">Poids (kg)</label>
+                <input type="number" formControlName="weight" placeholder="Poids" required />
+              </div>
+
+              <div class="field">
+                <label class="label_field">Niveau de forme physique</label>
+                <select formControlName="fitnessLevel" required>
+                  <option value="" disabled selected>Choisir le niveau</option>
+                  <option value="Débutant">Débutant</option>
+                  <option value="Intermédiaire">Intermédiaire</option>
+                  <option value="Avancé">Avancé</option>
+                </select>
+              </div>
+
+              <div class="field margin_0">
+                <button type="submit" [disabled]="registerForm.invalid" class="main_bt">
+                  S'inscrire
+                </button>
+              </div>
+            </fieldset>
+          </form>
+          <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="full_container">
+  <div class="container">
+    <div class="center verticle_center full_height">
+      <div class="login_section">
+        <div class="logo_login">
+          <div class="center">
+            <img width="210" src="/assets/images/logowhite.png" alt="#" />
+          </div>
+        </div>
+        <div class="login_form">
+          <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+            <fieldset>
+              <legend class="text-center fw-bold">Inscription</legend>
+              <div class="row g-3">
+                <div class="col-md-6 field">
+                  <label class="label_field">Prénom</label>
+                  <input type="text" formControlName="firstName" class="form-control" placeholder="Prénom" required />
+                </div>
+
+                <div class="col-md-6 field">
+                  <label class="label_field">Nom</label>
+                  <input type="text" formControlName="lastName" class="form-control" placeholder="Nom" required />
+                </div>
+
+                <div class="col-md-6 field">
+                  <label class="label_field">Adresse E-mail</label>
+                  <input type="email" formControlName="email" class="form-control" placeholder="E-mail" required />
+                </div>
+
+                <div class="col-md-6 field">
+                  <label class="label_field">Mot de passe</label>
+                  <input type="password" formControlName="password" class="form-control" placeholder="Mot de passe"
+                    required />
+                </div>
+
+                <div class="col-md-6 field">
+                  <label class="label_field">Confirmer le mot de passe</label>
+                  <input type="password" formControlName="confirmPassword" class="form-control"
+                    placeholder="Confirmer le mot de passe" required />
+                </div>
+
+                <div class="col-md-6 field">
+                  <label class="label_field">Date de naissance</label>
+                  <input type="date" formControlName="birthDate" class="form-control" required />
+                </div>
+
+                <div class="col-md-6 field">
+                  <label class="label_field">Genre</label>
+                  <select formControlName="gender" class="form-select" required>
+                    <option value="" disabled selected>Choisir le genre</option>
+                    <option value="M">Masculin</option>
+                    <option value="F">Féminin</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6 field">
+                  <label class="label_field">Taille (cm)</label>
+                  <input type="number" formControlName="height" class="form-control" placeholder="Taille" required />
+                </div>
+
+                <div class="col-md-6 field">
+                  <label class="label_field">Poids (kg)</label>
+                  <input type="number" formControlName="weight" class="form-control" placeholder="Poids" required />
+                </div>
+
+                <div class="col-md-6 field">
+                  <label class="label_field">Niveau de forme physique</label>
+                  <select formControlName="fitnessLevel" class="form-select" required>
+                    <option value="" disabled selected>Choisir le niveau</option>
+                    <option value="Débutant">Débutant</option>
+                    <option value="Intermédiaire">Intermédiaire</option>
+                    <option value="Avancé">Avancé</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field text-center mt-3">
+                <button type="submit" [disabled]="registerForm.invalid" class="main_bt">
+                  S'inscrire
+                </button>
+              </div>
+            </fieldset>
+          </form>
+          <div *ngIf="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

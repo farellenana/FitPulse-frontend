@@ -40,8 +40,25 @@ export class LoginComponent implements OnInit {
       this.authService.login(username, password).subscribe({
         next: (response) => {
           if (response?.token) {
+            // Nettoyer le rôle pour retirer les crochets
+            const cleanedRole = response.role.replace(/[\[\]]/g, '');
+
             localStorage.setItem('token', response.token);
-            this.router.navigate(['/dashboard']);
+            localStorage.setItem('role', cleanedRole); // Stocker le rôle nettoyé
+            localStorage.setItem('username', username);
+
+            console.log('------Rôle reçu:', cleanedRole);
+            console.log(
+              'Rôle stocké dans localStorage:',
+              localStorage.getItem('role')
+            );
+            console.log('Rôle reçu du serveur:', response.role);
+
+            if (cleanedRole === 'ADMIN') {
+              this.router.navigate(['/dashboard']);
+            } else {
+              this.router.navigate(['/homePage']);
+            }
           } else {
             this.errorMessage = "Problème d'authentification";
           }

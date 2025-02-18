@@ -3276,6 +3276,18 @@ table.projects tr td:first-child {
     overflow: hidden;
 }
 
+.register_section {
+  max-width: 840px;
+  background: #fff;
+  min-height: 540px;
+  width: 100%;
+  box-shadow: 0px 0 10px -8px #000;
+  margin: 0px;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .logo_login {
     background: url('/assets/images/all.jpeg');
     padding: 50px 0;
